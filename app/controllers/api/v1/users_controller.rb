@@ -19,7 +19,7 @@ module Api
 
       def create
         user = User.new(session_params)
-        user.generate_authentication_token!
+        # user.on_jwt_dispatch
         if user.save
           render json: user, status: 201, location: @user
         else
@@ -33,7 +33,7 @@ module Api
         user = User.find_by(email: user_email)
         if user && user.valid_password?(user_password)
           #sign_in user#, store: false
-          user.generate_authentication_token!
+          # user.on_jwt_dispatch
           user.save
           render json: user, status: 201, location: @user
         else
@@ -43,7 +43,7 @@ module Api
     
       def destroy
         puts request[:Authorization]
-        current_user.generate_authentication_token!
+        current_# user.on_jwt_dispatch
         current_user.save
         render json: { message: ["Successfully signed out"] }, status: 204
       end
